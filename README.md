@@ -53,11 +53,13 @@ src/data/aiConversationLog.ts
 
 其中 `docs/codex-iteration-log.md` 只是共享格式模板；`docs/codex-logs/` 下的个人日志用于源码审阅；`src/data/aiConversationLog.ts` 用于应用侧边栏里的“和AI编程工具对话”展示，初始为空，后续只写入当前候选人的记录。
 
-最终提交 GitHub 前，请运行：
+项目会在 `pnpm install` 时自动安装本地 Git `pre-push` 钩子。之后候选人提交到 GitHub 时会自动运行：
 
 ```sh
 pnpm verify:answer
 ```
+
+如果自动设置没有生效，可让 Codex 运行 `pnpm setup:git-hooks` 后再提交。
 
 面试官会结合最终代码、Git 提交历史和 `docs/codex-logs/` 下的候选人个人日志判断候选人使用 AI 迭代项目的过程。
 

@@ -8,6 +8,16 @@ This repository is a Codex-assisted coding exercise. Before analyzing or changin
 
 Treat that file as the project-local answer standard. Do not skip it, even for small changes.
 
+## Local Git Hook Setup
+
+After reading this file and `docs/candidate-rules.md` for the first time in a fresh clone, run:
+
+```sh
+pnpm setup:git-hooks
+```
+
+`pnpm install` also runs the same setup automatically. The setup points this repository's local Git hooks at `.githooks/`, so `git push` runs `pnpm verify:answer` before code is submitted to GitHub. If the verification fails, fix the issue and push again.
+
 ## Pre-Response Log Check
 
 At the beginning of every new user prompt, before answering the new request or making new changes, the AI assistant must check whether the previous iteration has already been recorded in both:

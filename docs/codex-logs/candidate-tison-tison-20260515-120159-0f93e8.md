@@ -113,6 +113,29 @@
 - git push origin main 成功
 - 未执行云端上传：缺少 CODEX_INTERVIEW_CANDIDATE_UID 和 CODEX_INTERVIEW_EXAM_KEY
 
+## 2026-05-15 18:48:29 CST (+0800)
+
+### 用户输入
+我看你在README中有这样一段。这个操作核心是用来做什么的呀？帮我解释一下。另外，就是用户真正在提交的时候，不一定记得这一个。那么你能否把它写到那个某种规范之中？当那个候选人第一次做的规范之后，这规范就已经在他codex本地写进去了。然后只要他自己提交到GitHub的时候，这个就会自动运行，怎么样呢？这样会更简单一点，不用候选人记录那么多，我们也不用给他那么多的设定和要求。
+
+### AI 最终输出
+已解释 `pnpm verify:answer` 的作用：它是交卷前的本地质检，会同时检查 lint、生产构建、候选人迭代日志格式、UI 对话数据源和答题规范文件，避免候选人把无法构建或日志缺失的版本推到 GitHub。已将该检查改为自动化：新增 `.githooks/pre-push`，推送到 GitHub 前自动运行 `pnpm verify:answer`；新增 `scripts/setup-git-hooks.mjs` 和 `pnpm setup:git-hooks`，并让 `pnpm install` 通过 `prepare` 自动安装 Git hook；同时更新 AGENTS、候选人规范和 README，要求 Codex 首次读规范后主动安装本地 hook。
+
+### 本轮改动文件
+- .githooks/pre-push
+- AGENTS.md
+- README.md
+- docs/candidate-rules.md
+- docs/codex-logs/candidate-tison-tison-20260515-120159-0f93e8.md
+- package.json
+- scripts/setup-git-hooks.mjs
+- src/data/aiConversationLog.ts
+
+### 验证结果
+- 已确认上一轮推送记录存在于当前候选人个人日志和 src/data/aiConversationLog.ts
+- pnpm setup:git-hooks 通过，并确认本地 core.hooksPath=.githooks
+- pnpm verify:answer 通过
+
 ## 2026-05-15 18:32:40 CST (+0800)
 
 ### 用户输入
