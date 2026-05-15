@@ -2,17 +2,6 @@
 
 这是一个用于候选人笔试的移动端前端 Demo。候选人需要克隆本项目后，在 Codex 客户端中根据给定需求继续迭代。
 
-## 开发命令
-
-```sh
-pnpm install
-pnpm dev
-pnpm lint
-pnpm build
-pnpm verify:codex-log
-pnpm verify:answer
-```
-
 ## 候选人答题流程
 
 候选人克隆项目后，请用 Codex 客户端打开本项目，并先输入：
