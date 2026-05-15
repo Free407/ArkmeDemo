@@ -136,6 +136,24 @@
 - pnpm setup:git-hooks 通过，并确认本地 core.hooksPath=.githooks
 - pnpm verify:answer 通过
 
+## 2026-05-15 18:58:34 CST (+0800)
+
+### 用户输入
+把这一大段删除就行了。然后处理完之后跟我推到GitHub。
+
+### AI 最终输出
+已删除 README 中面向候选人不需要直接阅读的 `Codex 迭代记录要求` 整段，包括个人日志路径说明、记录字段说明、自动 Git hook 和 `pnpm verify:answer` 的细节说明。底层记录和自动校验机制仍保留在 AGENTS.md、docs/candidate-rules.md、.githooks/pre-push 和相关脚本中。
+
+### 本轮改动文件
+- README.md
+- docs/codex-logs/candidate-tison-tison-20260515-120159-0f93e8.md
+- src/data/aiConversationLog.ts
+
+### 验证结果
+- 已确认上一轮自动验证 hook 记录存在于当前候选人个人日志和 src/data/aiConversationLog.ts
+- 首次运行 pnpm verify:answer 时发现旧版 verify-answer-standard 仍强制 README 展示 docs/codex-logs/ 等底层机制，已同步调整为只检查 README 的候选人核心信息，底层机制改由 AGENTS.md 和 docs/candidate-rules.md 承担
+- pnpm verify:answer 通过
+
 ## 2026-05-15 18:32:40 CST (+0800)
 
 ### 用户输入
