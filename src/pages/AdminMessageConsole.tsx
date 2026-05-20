@@ -1,4 +1,5 @@
 import React from "react";
+import { applyLocalArrangementRule, type ArrangementRuleResult } from "@/data/arrangements";
 import {
   createTestGroup,
   createTestGroupMessage,
@@ -79,6 +80,8 @@ export default function AdminMessageConsole() {
   const [groupNote, setGroupNote] = React.useState("");
   const [messageText, setMessageText] = React.useState("");
   const [messageTextFocused, setMessageTextFocused] = React.useState(false);
+  const [arrangementRuleResult, setArrangementRuleResult] =
+    React.useState<ArrangementRuleResult>({ action: "none" });
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const identityPickerRef = React.useRef<HTMLDivElement>(null);
   const groupPickerRef = React.useRef<HTMLDivElement>(null);
@@ -305,16 +308,25 @@ export default function AdminMessageConsole() {
     if (!activeIdentity || !messageText.trim()) return;
     if (messageMode === "group" && !activeGroup) return;
 
+    const normalizedMessageText = messageText.trim();
     setMessages((prev) => {
       const nextMessage =
         messageMode === "group" && activeGroup
-          ? createTestGroupMessage(activeGroup.id, activeIdentity.id, messageText)
-          : createTestMessage(activeIdentity.id, messageText);
+          ? createTestGroupMessage(activeGroup.id, activeIdentity.id, normalizedMessageText)
+          : createTestMessage(activeIdentity.id, normalizedMessageText);
       const nextMessages = [
         ...prev,
         nextMessage,
       ];
       persistTestMessages(nextMessages);
+      const ruleResult = applyLocalArrangementRule({
+        text: normalizedMessageText,
+        senderName: activeIdentity.name,
+        conversationLabel:
+          messageMode === "group" && activeGroup ? activeGroup.name : activeIdentity.name,
+        sentAt: nextMessage.sentAt,
+      });
+      setArrangementRuleResult(ruleResult);
       return nextMessages;
     });
     setMessageText("");
@@ -514,6 +526,13 @@ export default function AdminMessageConsole() {
                     </div>
                   </div>
                   <div className="ml-auto flex shrink-0 items-center gap-3">
+                    {arrangementRuleResult.action !== "none" && (
+                      <span className="hidden rounded-full bg-primary-soft px-2 py-1 text-[12px] leading-4 text-primary sm:inline">
+                        {arrangementRuleResult.action === "created"
+                          ? "已生成安排"
+                          : "已合并到安排"}
+                      </span>
+                    )}
                     <span className="text-[12px] leading-5 text-text-tertiary">
                       Enter发送 / Shift+Enter换行
                     </span>
